@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,31 +38,95 @@ public class TypeHandler : MonoBehaviour
     };
 
     private string curWord;
+    private int nextCharIdx = 0;
+    private KeyCode nextKey;
+    private Text textDisplay;
 
-    private List<string> words = new List<string>{
-        "hello",
-        "benji",
-        "test",
-        "fj"
+    private static string GREEN = "#00FF00";
+
+    private static List<string> WORDS = new List<string>()
+    {
+        "happy",
+        "love",
+        "kind",
+        "fun",
+        "play",
+        "smile",
+        "friend",
+        "beautiful",
+        "bright",
+        "cheerful",
+        "cute",
+        "delightful",
+        "enthusiastic",
+        "friendly",
+        "generous",
+        "gentle",
+        "joyful",
+        "lively",
+        "merry",
+        "optimistic",
+        "playful",
+        "pleasant",
+        "positive",
+        "proud",
+        "pure",
+        "radiant",
+        "refreshing",
+        "simple",
+        "soothing",
+        "sunny",
+        "thoughtful",
+        "tender",
+        "trusting",
+        "warm",
+        "whimsical",
+        "blissful",
+        "cheery",
+        "content",
+        "cozy",
+        "cuddly",
+        "dreamy",
+        "easygoing",
+        "fantastical",
+        "fluffy",
+        "glamorous",
+        "gracious",
+        "heavenly"
     };
 
     void Start()
     {
-        curWord = words[Random.Range(0, words.Count)];
-        text.GetComponent<Text>().text = curWord;
-        Debug.Log("Hello: " + curWord);
+        textDisplay = text.GetComponent<Text>();
+        ShowNextWord();
     }
 
     void Update()
     {
-        if (Input.anyKeyDown) {
-            foreach (KeyCode key in keys) {
-                if (Input.GetKeyDown(key)) {
-                    Debug.Log(key);
-                }
+        if (Input.anyKeyDown && Input.GetKeyDown(nextKey)) {
+            textDisplay.text = string.Format("<color={0}>{1}</color>{2}", GREEN, curWord.Substring(0, nextCharIdx+1), curWord.Substring(nextCharIdx+1));
+            nextCharIdx++;
+            if (nextCharIdx >= curWord.Length) {
+                ShowNextWord();
+            } else {
+                SetNextKey();
             }
-        }
+        }   
     }
 
+    private void ShowNextWord() {
+        nextCharIdx = 0;
+        curWord = WORDS[UnityEngine.Random.Range(0, WORDS.Count)];
+        textDisplay.text = curWord;
+        SetNextKey();
+    }
 
+    private void SetNextKey() {
+        try {
+            nextKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), curWord[nextCharIdx].ToString().ToUpper());
+        }
+        catch (ArgumentException err) {
+            Debug.LogWarning(string.Format("Invalid key: {0}, {1}", curWord[nextCharIdx], err));
+        }
+    }
 }
