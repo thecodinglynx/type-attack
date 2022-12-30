@@ -9,17 +9,17 @@ public class MoveToCenter : MonoBehaviour
 
     [SerializeField]
     private float speed;
-    private Vector2 screenCenter;
+    private Vector3 screenCenter;
 
     void Start()
     {
-        screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        screenCenter = new Vector3(0, 0, 1);
         speed = Random.Range(minSpeed, maxSpeed);
     }
 
     void Update()
     {
         float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, screenCenter, step);
+        transform.position = Vector3.MoveTowards(transform.position, screenCenter, step);
     }
 }

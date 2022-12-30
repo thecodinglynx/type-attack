@@ -11,7 +11,7 @@ public class Defender : MonoBehaviour
     private Vector3 screenCenter;
 
     public void ShootAtClosest() {
-        screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        screenCenter = new Vector3(0, 0, 1);
         var closest = enemySpawner.GetClosestEnemy();
         if (closest == null) {
             return;

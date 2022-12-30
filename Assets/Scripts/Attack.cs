@@ -18,6 +18,6 @@ public class Attack : MonoBehaviour
 
     private void Launch() {
         var direction = enemy.transform.position - transform.position;
-        rb.velocity = new Vector2(direction.x, direction.y) * force;
+        rb.velocity = new Vector3(direction.x, direction.y, 1) * force;
     }
 }

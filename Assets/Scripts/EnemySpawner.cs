@@ -23,11 +23,11 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        screenCenter = new Vector2(0, 0);
         minX = screenCenter.x - (Screen.width * 0.5f) - 20;
-        minX = screenCenter.x + (Screen.width * 0.5f) + 20;
-        minY = screenCenter.y - (Screen.height * 0.5f) - 20;
-        maxY = screenCenter.y + (Screen.height * 0.5f) + 20;
+        maxX = screenCenter.x + (Screen.width * 0.5f) + 20;
+        minY = screenCenter.y + (Screen.height * 0.5f) + 20;
+        maxY = screenCenter.y - (Screen.height * 0.5f) - 20;
 
         enemies = new Dictionary<string, GameObject>();
         StartCoroutine("InstantiateEnemy");
@@ -84,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
                 x = randomBool() ? minX : maxX;
                 y = Random.Range(maxY, minY);
             }
-            var newEnemy = Instantiate(enemy, new Vector3(x, y, 0), Quaternion.identity);
+            var newEnemy = Instantiate(enemy, new Vector3(x, y, 1), Quaternion.identity);
             var id = System.Guid.NewGuid().ToString();
             newEnemy.GetComponent<Enemy>().SetId(id);
 
