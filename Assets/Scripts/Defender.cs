@@ -11,8 +11,12 @@ public class Defender : MonoBehaviour
     private Vector3 screenCenter;
 
     public void ShootAtClosest() {
-        screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+        screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        var closest = enemySpawner.GetClosestEnemy();
+        if (closest == null) {
+            return;
+        }
         var bullet = Instantiate(projectile, screenCenter, Quaternion.identity);
-        bullet.GetComponent<Attack>().ShootAt(enemySpawner.GetClosestEnemy());
+        bullet.GetComponent<Attack>().ShootAt(closest);
     }
 }

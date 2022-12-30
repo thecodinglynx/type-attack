@@ -16,8 +16,16 @@ public class Enemy : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Bullet") {
-            EventManager.TriggerEvent(EventManager.Event.ENEMY_DESTROYED, new Dictionary<string, object> { { "id", id } });
-            Destroy(gameObject);
+            Die(collision.gameObject);
         }
+    }
+
+    private void Die(GameObject bullet) {
+        Destroy(bullet);
+        gameObject.GetComponent<Renderer>().enabled = false;
+        EventManager.TriggerEvent(EventManager.Event.ENEMY_DESTROYED, new Dictionary<string, object> { { "id", id } });
+        var ps = GetComponent<ParticleSystem>();
+        ps.Play();
+        Destroy(gameObject, ps.main.duration);
     }
 }

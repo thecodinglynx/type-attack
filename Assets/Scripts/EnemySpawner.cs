@@ -6,10 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemy;
-    private int minX = -100;
-    private int maxX = Screen.width + 100;
-    private int maxY = -100;
-    private int minY = Screen.height + 100;
+    private float minX, maxX, minY, maxY;
     private Vector2 screenCenter;
 
     private Dictionary<string, GameObject> enemies;
@@ -27,6 +24,11 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        minX = screenCenter.x - (Screen.width * 0.5f) - 20;
+        minX = screenCenter.x + (Screen.width * 0.5f) + 20;
+        minY = screenCenter.y - (Screen.height * 0.5f) - 20;
+        maxY = screenCenter.y + (Screen.height * 0.5f) + 20;
+
         enemies = new Dictionary<string, GameObject>();
         StartCoroutine("InstantiateEnemy");
     }
@@ -42,6 +44,7 @@ public class EnemySpawner : MonoBehaviour
         enemies.Remove(id);
     }
 
+    // returns closest enemy, returned object may be null if none on the screen.
     public GameObject GetClosestEnemy() {
         GameObject closest = null;
         var closestDist = float.MaxValue;
@@ -57,6 +60,9 @@ public class EnemySpawner : MonoBehaviour
 
     public void MarkClosestEnemy() {
         var closest = GetClosestEnemy();
+        if (closest == null) {
+            return;
+        }
         foreach(KeyValuePair<string, GameObject> kv in enemies) {
             if (kv.Key == closest.GetComponent<Enemy>().GetId()) {
                 kv.Value.GetComponent<SpriteRenderer>().color = Color.cyan;
