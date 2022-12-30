@@ -8,6 +8,9 @@ public class TypeHandler : MonoBehaviour
     [SerializeField]
     private GameObject text;
 
+    [SerializeField]
+    private Defender defender;
+
     private List<KeyCode> keys = new List<KeyCode>{
         KeyCode.A,
         KeyCode.B,
@@ -105,6 +108,7 @@ public class TypeHandler : MonoBehaviour
     {
         if (Input.anyKeyDown && Input.GetKeyDown(nextKey)) {
             textDisplay.text = string.Format("<color={0}>{1}</color>{2}", GREEN, curWord.Substring(0, nextCharIdx+1), curWord.Substring(nextCharIdx+1));
+            defender.ShootAtClosest();
             nextCharIdx++;
             if (nextCharIdx >= curWord.Length) {
                 ShowNextWord();

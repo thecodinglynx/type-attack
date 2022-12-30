@@ -7,4 +7,8 @@ public class EnemyStats : MonoBehaviour
     public void SetId(string id) {
         this.id = id;
     }
+
+    public string GetId() {
+        return id;
+    }
 }

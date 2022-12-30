@@ -23,8 +23,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Update() 
     {
-        var closest = GetClosestEnemy();
-        closest.GetComponent<SpriteRenderer>().color = Color.cyan;
+        MarkClosestEnemy();
     }
 
     public GameObject GetClosestEnemy() {
@@ -38,6 +37,17 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    public void MarkClosestEnemy() {
+        var closest = GetClosestEnemy();
+        foreach(KeyValuePair<string, GameObject> kv in enemies) {
+            if (kv.Key == closest.GetComponent<EnemyStats>().GetId()) {
+                kv.Value.GetComponent<SpriteRenderer>().color = Color.cyan;
+            } else {
+                kv.Value.GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
+        }
     }
 
     IEnumerator InstantiateEnemy() {
