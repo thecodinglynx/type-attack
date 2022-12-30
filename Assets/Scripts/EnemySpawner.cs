@@ -14,6 +14,16 @@ public class EnemySpawner : MonoBehaviour
 
     private Dictionary<string, GameObject> enemies;
 
+    void OnEnable()
+    {
+        EventManager.StartListening(EventManager.Event.ENEMY_DESTROYED, OnEnemyDestroyed);
+    }
+
+    void OnDisable()
+    {
+        EventManager.StopListening(EventManager.Event.ENEMY_DESTROYED, OnEnemyDestroyed);
+    }
+
     void Start()
     {
         screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
@@ -24,6 +34,12 @@ public class EnemySpawner : MonoBehaviour
     void Update() 
     {
         MarkClosestEnemy();
+    }
+
+    void OnEnemyDestroyed(Dictionary<string, object> message)
+    {
+        var id = (string)message["id"];
+        enemies.Remove(id);
     }
 
     public GameObject GetClosestEnemy() {
@@ -42,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
     public void MarkClosestEnemy() {
         var closest = GetClosestEnemy();
         foreach(KeyValuePair<string, GameObject> kv in enemies) {
-            if (kv.Key == closest.GetComponent<EnemyStats>().GetId()) {
+            if (kv.Key == closest.GetComponent<Enemy>().GetId()) {
                 kv.Value.GetComponent<SpriteRenderer>().color = Color.cyan;
             } else {
                 kv.Value.GetComponent<SpriteRenderer>().color = Color.yellow;
@@ -64,7 +80,7 @@ public class EnemySpawner : MonoBehaviour
             }
             var newEnemy = Instantiate(enemy, new Vector3(x, y, 0), Quaternion.identity);
             var id = System.Guid.NewGuid().ToString();
-            newEnemy.GetComponent<EnemyStats>().SetId(id);
+            newEnemy.GetComponent<Enemy>().SetId(id);
 
             enemies.Add(id, newEnemy);  
             yield return new WaitForSeconds(Random.Range(2, 5));
