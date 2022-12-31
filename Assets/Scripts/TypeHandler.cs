@@ -6,10 +6,7 @@ using UnityEngine.UI;
 public class TypeHandler : MonoBehaviour
 {
     [SerializeField]
-    private GameObject text;
-
-    [SerializeField]
-    private Defender defender;
+    private List<Ability> abilities;
 
     private List<KeyCode> keys = new List<KeyCode>{
         KeyCode.A,
@@ -39,13 +36,6 @@ public class TypeHandler : MonoBehaviour
         KeyCode.Y,
         KeyCode.Z,
     };
-
-    private string curWord;
-    private int nextCharIdx = 0;
-    private KeyCode nextKey;
-    private Text textDisplay;
-
-    private static string GREEN = "#00FF00";
 
     private static List<string> WORDS = new List<string>()
     {
@@ -100,37 +90,24 @@ public class TypeHandler : MonoBehaviour
 
     void Start()
     {
-        textDisplay = text.GetComponent<Text>();
-        ShowNextWord();
+        foreach(Ability cur in abilities) {
+            cur.SetCurrentWord(getRandomWord());
+        }
     }
 
     void Update()
     {
-        if (Input.anyKeyDown && Input.GetKeyDown(nextKey)) {
-            textDisplay.text = string.Format("<color={0}>{1}</color>{2}", GREEN, curWord.Substring(0, nextCharIdx+1), curWord.Substring(nextCharIdx+1));
-            defender.ShootAtClosest();
-            nextCharIdx++;
-            if (nextCharIdx >= curWord.Length) {
-                ShowNextWord();
-            } else {
-                SetNextKey();
-            }
-        }   
+        foreach (Ability ability in abilities) {
+            if (Input.anyKeyDown && Input.GetKeyDown(ability.nextKey)) {
+                ability.action.perform();
+                if (ability.UpdateWord()) {
+                    ability.SetCurrentWord(getRandomWord());
+                }
+            } 
+        }
     }
 
-    private void ShowNextWord() {
-        nextCharIdx = 0;
-        curWord = WORDS[UnityEngine.Random.Range(0, WORDS.Count)];
-        textDisplay.text = curWord;
-        SetNextKey();
-    }
-
-    private void SetNextKey() {
-        try {
-            nextKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), curWord[nextCharIdx].ToString().ToUpper());
-        }
-        catch (ArgumentException err) {
-            Debug.LogWarning(string.Format("Invalid key: {0}, {1}", curWord[nextCharIdx], err));
-        }
+    private string getRandomWord() {
+        return WORDS[UnityEngine.Random.Range(0, WORDS.Count)];
     }
 }
