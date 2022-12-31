@@ -21,7 +21,8 @@ public class EventManager : MonoBehaviour
 {
     public enum Event
     {
-        ENEMY_DESTROYED
+        ENEMY_DESTROYED,
+        SPACESTATION_ATTACKED
     }
 
     private Dictionary<Enum, Action<Dictionary<string, object>>> eventDictionary;

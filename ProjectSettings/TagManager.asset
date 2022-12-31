@@ -5,16 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - SpaceStation
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ignore Friendly
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Ignore All
+  - Enemy
+  - Bullet
   - 
   - 
   - 

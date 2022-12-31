@@ -16,12 +16,19 @@ public class Enemy : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Bullet") {
-            Die(collision.gameObject);
+            Destroy(collision.gameObject);
         }
+        if (collision.gameObject.tag == "SpaceStation") {
+            DamageSpaceStation();
+        }
+        Die();
     }
 
-    private void Die(GameObject bullet) {
-        Destroy(bullet);
+    private void DamageSpaceStation() {
+        EventManager.TriggerEvent(EventManager.Event.SPACESTATION_ATTACKED, new Dictionary<string, object> { { "id", 1 } });
+    }
+
+    private void Die() {
         gameObject.GetComponent<Renderer>().enabled = false;
         EventManager.TriggerEvent(EventManager.Event.ENEMY_DESTROYED, new Dictionary<string, object> { { "id", id } });
         var ps = GetComponent<ParticleSystem>();
