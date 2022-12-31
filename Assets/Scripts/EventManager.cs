@@ -22,6 +22,7 @@ public class EventManager : MonoBehaviour
     public enum Event
     {
         ENEMY_DESTROYED,
+        SHIELD_DESTROYED,
         SPACESTATION_ATTACKED
     }
 

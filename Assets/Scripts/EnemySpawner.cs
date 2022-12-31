@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
         foreach(KeyValuePair<string, GameObject> kv in enemies) {
-            if (kv.Key == closest.GetComponent<Enemy>().GetId()) {
+            if (kv.Key == closest.GetComponent<Enemy>().id) {
                 kv.Value.GetComponent<SpriteRenderer>().color = Color.cyan;
             } else {
                 kv.Value.GetComponent<SpriteRenderer>().color = Color.yellow;
@@ -86,8 +86,7 @@ public class EnemySpawner : MonoBehaviour
             }
             var newEnemy = Instantiate(enemy, new Vector3(x, y, 1), Quaternion.identity);
             var id = System.Guid.NewGuid().ToString();
-            newEnemy.GetComponent<Enemy>().SetId(id);
-
+            newEnemy.GetComponent<Enemy>().id = id;
             enemies.Add(id, newEnemy);  
             yield return new WaitForSeconds(Random.Range(2, 5));
         }

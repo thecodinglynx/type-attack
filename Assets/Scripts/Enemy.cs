@@ -3,15 +3,7 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
-    private string id;
-
-    public void SetId(string id) {
-        this.id = id;
-    }
-
-    public string GetId() {
-        return id;
-    }
+    public string id {get; set;}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -21,6 +13,10 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "SpaceStation") {
             DamageSpaceStation();
         }
+        if (collision.gameObject.tag == "Shield") {
+            DestroyShield(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
         Die();
     }
 
@@ -28,8 +24,13 @@ public class Enemy : MonoBehaviour
         EventManager.TriggerEvent(EventManager.Event.SPACESTATION_ATTACKED, new Dictionary<string, object> { { "id", 1 } });
     }
 
+    private void DestroyShield(GameObject shield) {
+        EventManager.TriggerEvent(EventManager.Event.SHIELD_DESTROYED, new Dictionary<string, object> { { "id", shield.GetComponent<Shield>().id } });
+    }
+
     private void Die() {
         gameObject.GetComponent<Renderer>().enabled = false;
+        gameObject.GetComponent<Collider2D>().enabled = false;
         EventManager.TriggerEvent(EventManager.Event.ENEMY_DESTROYED, new Dictionary<string, object> { { "id", id } });
         var ps = GetComponent<ParticleSystem>();
         ps.Play();
