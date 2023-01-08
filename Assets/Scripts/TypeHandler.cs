@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class TypeHandler : MonoBehaviour
 {
     [SerializeField]
-    private List<Ability> abilities;
+    private List<GameObject> abilityPrefabs;
+
+    private List<Ability> abilities = new List<Ability>();
 
     private List<KeyCode> keys = new List<KeyCode>{
         KeyCode.A,
@@ -90,6 +92,27 @@ public class TypeHandler : MonoBehaviour
 
     void Start()
     {
+        if (abilities.Count > 0) {
+            return;
+        }
+
+        var parent = GameObject.FindGameObjectWithTag("Canvas").transform;
+        foreach(var cur in abilityPrefabs) {
+            var curInstance = GameObject.Instantiate(
+                cur, 
+                new Vector3(10, 0, 0), 
+                Quaternion.identity
+            );
+            curInstance.transform.SetParent(parent, false);
+
+            RectTransform uitransform = curInstance.GetComponent<RectTransform>();
+            uitransform.anchorMin = new Vector2(0, 1);
+            uitransform.anchorMax = new Vector2(0, 1);
+            uitransform.pivot = new Vector2(0, 1);
+
+            abilities.Add(curInstance.GetComponent<Ability>());
+        }
+
         foreach(Ability cur in abilities) {
             cur.SetCurrentWord(getRandomWord());
         }
@@ -104,6 +127,12 @@ public class TypeHandler : MonoBehaviour
                     ability.SetCurrentWord(getRandomWord());
                 }
             } 
+        }
+    }
+
+    void OnDestroy() {
+        foreach (Ability ability in abilities) {
+            Destroy(ability.gameObject);
         }
     }
 

@@ -16,8 +16,8 @@ public class Ability : MonoBehaviour
     private Text textDisplay;
     private static string GREEN = "#00FF00";
  
-    public void Start() {
-        this.textDisplay = GetComponentInParent<Text>();
+    public void Awake() {
+        this.textDisplay = FindWithTag(transform, "Word");
     }
 
     public void SetCurrentWord(string curWord) {
@@ -46,6 +46,15 @@ public class Ability : MonoBehaviour
             Debug.LogWarning(string.Format("Invalid key: {0}, {1}", curWord[nextCharIdx], err));
         }
     }
+
+    private Text FindWithTag(Transform root, string tag)
+{
+    foreach (Text t in root.GetComponentsInChildren<Text>())
+    {
+        if (t.CompareTag(tag)) return t;
+    }
+    return null;
+}
 }
 
 

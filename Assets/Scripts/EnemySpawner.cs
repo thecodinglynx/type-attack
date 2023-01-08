@@ -9,33 +9,57 @@ public class EnemySpawner : MonoBehaviour
     private float minX, maxX, minY, maxY;
     private Vector2 screenCenter;
 
-    private Dictionary<string, GameObject> enemies;
+    private Dictionary<string, GameObject> enemies = new Dictionary<string, GameObject>();
+
+    public static EnemySpawner Instance { get; private set; }
+
+    void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
+
+        screenCenter = new Vector2(0, 0);
+        minX = screenCenter.x - (Screen.width * 0.5f);
+        maxX = screenCenter.x + (Screen.width * 0.5f);
+        minY = screenCenter.y + (Screen.height * 0.5f);
+        maxY = screenCenter.y - (Screen.height * 0.5f);
+    }
 
     void OnEnable()
     {
         EventManager.StartListening(EventManager.Event.ENEMY_DESTROYED, OnEnemyDestroyed);
+        foreach(KeyValuePair<string, GameObject> kv in enemies) {
+            kv.Value.SetActive(true);
+        }
+        
+        StartCoroutine("InstantiateEnemy");
     }
 
     void OnDisable()
     {
+        foreach(KeyValuePair<string, GameObject> kv in enemies) {
+            kv.Value.SetActive(false);
+        }
         EventManager.StopListening(EventManager.Event.ENEMY_DESTROYED, OnEnemyDestroyed);
-    }
-
-    void Start()
-    {
-        screenCenter = new Vector2(0, 0);
-        minX = screenCenter.x - (Screen.width * 0.5f) - 20;
-        maxX = screenCenter.x + (Screen.width * 0.5f) + 20;
-        minY = screenCenter.y + (Screen.height * 0.5f) + 20;
-        maxY = screenCenter.y - (Screen.height * 0.5f) - 20;
-
-        enemies = new Dictionary<string, GameObject>();
-        StartCoroutine("InstantiateEnemy");
     }
 
     void Update() 
     {
         MarkClosestEnemy();
+    }
+
+    void OnDestroy() {
+        foreach(KeyValuePair<string, GameObject> kv in enemies) {
+            Destroy(kv.Value);
+        }
+        enemies = new Dictionary<string, GameObject>();
     }
 
     void OnEnemyDestroyed(Dictionary<string, object> message)
@@ -88,6 +112,7 @@ public class EnemySpawner : MonoBehaviour
             var id = System.Guid.NewGuid().ToString();
             newEnemy.GetComponent<Enemy>().id = id;
             enemies.Add(id, newEnemy);  
+            newEnemy.transform.SetParent(transform, false);
             yield return new WaitForSeconds(Random.Range(2, 5));
         }
     }

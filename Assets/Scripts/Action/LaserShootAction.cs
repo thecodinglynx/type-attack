@@ -7,14 +7,11 @@ public class LaserShootAction : MonoBehaviour, Action
     [SerializeField]
     private GameObject projectile;
 
-    [SerializeField]
-    private EnemySpawner enemySpawner;
-
     private Vector3 screenCenter;
 
     public void perform() {
         screenCenter = new Vector3(0, 0, 1);
-        var closest = enemySpawner.GetClosestEnemy();
+        var closest = EnemySpawner.Instance.GetClosestEnemy();
         if (closest == null) {
             return;
         }

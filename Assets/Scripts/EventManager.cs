@@ -23,7 +23,8 @@ public class EventManager : MonoBehaviour
     {
         ENEMY_DESTROYED,
         SHIELD_DESTROYED,
-        SPACESTATION_ATTACKED
+        SPACESTATION_ATTACKED,
+        GAME_STATE_CHANGED
     }
 
     private Dictionary<Enum, Action<Dictionary<string, object>>> eventDictionary;

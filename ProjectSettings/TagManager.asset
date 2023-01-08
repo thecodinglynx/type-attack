@@ -7,6 +7,12 @@ TagManager:
   - Bullet
   - SpaceStation
   - Shield
+  - Canvas
+  - Word
+  - PlayButton
+  - ContinueButton
+  - RestartButton
+  - QuitButton
   layers:
   - Default
   - TransparentFX
