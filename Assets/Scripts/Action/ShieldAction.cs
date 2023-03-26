@@ -19,16 +19,18 @@ public class ShieldAction : MonoBehaviour, Action
         EventManager.StopListening(EventManager.Event.SHIELD_DESTROYED, OnShieldDestroyed);
     }
 
-    public void Start() {
-        shields = new Dictionary<string, GameObject>();
-    }
-
     public void perform()
     {
+        if (shields == null) {
+            shields = new Dictionary<string, GameObject>();
+        }
         var newShield = Instantiate(shield, new Vector3(0, 0, 0), Quaternion.identity);
         var id = System.Guid.NewGuid().ToString();
         newShield.GetComponent<Shield>().id = id;
-        shields.Add(id, newShield);  
+        shields.Add(id, newShield);
+
+        GameObject spaceStation = GameObject.FindGameObjectWithTag("SpaceStation");
+        newShield.transform.SetParent(spaceStation.transform, true);
     }
 
     void OnShieldDestroyed(Dictionary<string, object> message)

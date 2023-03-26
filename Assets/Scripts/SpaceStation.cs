@@ -25,7 +25,7 @@ public class SpaceStation : MonoBehaviour
     private void onSpaceStationAttacked(Dictionary<string, object> message) {
         if (healthBar.DecreaseHealth() <= 0) {
             Destroyed();
-            // show gameover screen
+            // TODO: show gameover screen
         }
     }
 

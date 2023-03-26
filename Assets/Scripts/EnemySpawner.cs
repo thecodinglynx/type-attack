@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
         else 
         { 
             Instance = this; 
-        } 
+        }
 
         screenCenter = new Vector2(0, 0);
         minX = screenCenter.x - (Screen.width * 0.5f);
@@ -32,14 +32,16 @@ public class EnemySpawner : MonoBehaviour
         maxY = screenCenter.y - (Screen.height * 0.5f);
     }
 
+    void Start() {
+        StartCoroutine("InstantiateEnemy");
+    }
+
     void OnEnable()
     {
         EventManager.StartListening(EventManager.Event.ENEMY_DESTROYED, OnEnemyDestroyed);
         foreach(KeyValuePair<string, GameObject> kv in enemies) {
             kv.Value.SetActive(true);
         }
-        
-        StartCoroutine("InstantiateEnemy");
     }
 
     void OnDisable()
@@ -59,7 +61,6 @@ public class EnemySpawner : MonoBehaviour
         foreach(KeyValuePair<string, GameObject> kv in enemies) {
             Destroy(kv.Value);
         }
-        enemies = new Dictionary<string, GameObject>();
     }
 
     void OnEnemyDestroyed(Dictionary<string, object> message)

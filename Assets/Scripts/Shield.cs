@@ -12,7 +12,7 @@ public class Shield : MonoBehaviour
  
      private void Start()
      {
-         center = new Vector3(0, 0, 1);
+         center = new Vector3(0, 0, 0);
          radius = 100;
      }
  
@@ -21,6 +21,5 @@ public class Shield : MonoBehaviour
          angle += rotateSpeed * Time.deltaTime;
          var offset = new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 1) * radius;
          transform.position = center + offset;
-         transform.Rotate(0, 0, Random.Range(0, 2), Space.Self);
      }
 }

@@ -97,10 +97,11 @@ public class TypeHandler : MonoBehaviour
         }
 
         var parent = GameObject.FindGameObjectWithTag("Canvas").transform;
+        var yCoord = 0;
         foreach(var cur in abilityPrefabs) {
             var curInstance = GameObject.Instantiate(
                 cur, 
-                new Vector3(10, 0, 0), 
+                new Vector3(10, yCoord, 0), 
                 Quaternion.identity
             );
             curInstance.transform.SetParent(parent, false);
@@ -111,6 +112,7 @@ public class TypeHandler : MonoBehaviour
             uitransform.pivot = new Vector2(0, 1);
 
             abilities.Add(curInstance.GetComponent<Ability>());
+            yCoord -= 30;
         }
 
         foreach(Ability cur in abilities) {
