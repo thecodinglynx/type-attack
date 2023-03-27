@@ -21,5 +21,10 @@ public class MoveToCenter : MonoBehaviour
     {
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, screenCenter, step);
+
+        Vector3 relativePos = transform.position- screenCenter;
+        Vector3 desiredUp = new Vector3(relativePos.y, -relativePos.x, 0) * Mathf.Sign(-relativePos.x);
+        Quaternion rotation = Quaternion.LookRotation (-Vector3.forward, desiredUp);   
+        transform.rotation = rotation;
     }
 }
