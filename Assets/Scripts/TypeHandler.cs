@@ -124,8 +124,8 @@ public class TypeHandler : MonoBehaviour
     {
         foreach (Ability ability in abilities) {
             if (Input.anyKeyDown && Input.GetKeyDown(ability.nextKey)) {
-                ability.action.perform();
                 if (ability.UpdateWord()) {
+                    ability.action.perform();
                     ability.SetCurrentWord(getRandomWord());
                 }
             } 
