@@ -52,11 +52,6 @@ public class EnemySpawner : MonoBehaviour
         EventManager.StopListening(EventManager.Event.ENEMY_DESTROYED, OnEnemyDestroyed);
     }
 
-    void Update() 
-    {
-        MarkClosestEnemy();
-    }
-
     void OnDestroy() {
         foreach(KeyValuePair<string, GameObject> kv in enemies) {
             Destroy(kv.Value);
@@ -81,20 +76,6 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         return closest;
-    }
-
-    public void MarkClosestEnemy() {
-        var closest = GetClosestEnemy();
-        if (closest == null) {
-            return;
-        }
-        foreach(KeyValuePair<string, GameObject> kv in enemies) {
-            if (kv.Key == closest.GetComponent<Enemy>().id) {
-                kv.Value.GetComponent<SpriteRenderer>().color = Color.cyan;
-            } else {
-                kv.Value.GetComponent<SpriteRenderer>().color = Color.yellow;
-            }
-        }
     }
 
     IEnumerator InstantiateEnemy() {

@@ -232,10 +232,10 @@ GameObject:
   - component: {fileID: 8885999833344694062}
   - component: {fileID: 8885999833344694057}
   - component: {fileID: 8885999833344694060}
-  - component: {fileID: 8885999833344694063}
   - component: {fileID: 8885999833344694061}
   - component: {fileID: 8885999833344694051}
   - component: {fileID: 8885999833344694050}
+  - component: {fileID: -8302330232907493427}
   m_Layer: 3
   m_Name: SpaceStation
   m_TagString: SpaceStation
@@ -332,32 +332,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &8885999833344694063
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8885999833344694056}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.78, y: 0.85}
-    newSize: {x: 0.78, y: 0.85}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &8885999833344694061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5216,6 +5190,57 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!60 &-8302330232907493427
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8885999833344694056}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.78, y: 0.85}
+    newSize: {x: 0.78, y: 0.85}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.26, y: -0.16499999}
+      - {x: 0.39, y: -0.155}
+      - {x: 0.39, y: 0.065}
+      - {x: 0.19, y: 0.065}
+      - {x: 0.17, y: 0.095}
+      - {x: 0.17999999, y: 0.305}
+      - {x: 0.17999999, y: 0.355}
+      - {x: 0.089999996, y: 0.42499998}
+      - {x: -0.099999994, y: 0.42499998}
+      - {x: -0.13, y: 0.405}
+      - {x: -0.17, y: 0.355}
+      - {x: -0.17, y: 0.095}
+      - {x: -0.08, y: 0.005}
+      - {x: -0.21, y: 0.074999996}
+      - {x: -0.39, y: 0.065}
+      - {x: -0.39, y: -0.155}
+      - {x: -0.31, y: -0.175}
+      - {x: -0.19999999, y: -0.16499999}
+      - {x: -0.17, y: -0.275}
+      - {x: -0.13, y: -0.315}
+      - {x: -0.17, y: -0.385}
+      - {x: -0.17, y: -0.42499998}
+      - {x: 0.17, y: -0.42499998}
+      - {x: 0.21, y: -0.375}
+      - {x: 0.21, y: -0.275}
+      - {x: 0.19999999, y: -0.145}
 --- !u!1 &8885999833410997442
 GameObject:
   m_ObjectHideFlags: 0

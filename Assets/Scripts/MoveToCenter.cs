@@ -22,9 +22,9 @@ public class MoveToCenter : MonoBehaviour
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, screenCenter, step);
 
-        Vector3 relativePos = transform.position- screenCenter;
-        Vector3 desiredUp = new Vector3(relativePos.y, -relativePos.x, 0) * Mathf.Sign(-relativePos.x);
-        Quaternion rotation = Quaternion.LookRotation (-Vector3.forward, desiredUp);   
-        transform.rotation = rotation;
+        // point towards spacestation/center
+        var direction = screenCenter - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }
